@@ -16,6 +16,23 @@ Vim functions to jump through errors.
 mymake uses make by default but you can overload it with the MAKEPRG
 environment variable.
 
+# Usage
+
+Build with mymake instead of make. If an error occurs, start Vim and use
+:MymakeErr to load the errors. You can then navigate with the standard Vim
+commands :cprev and :cnext.
+
+## Tip
+If you are not familiar with Vim, you may want to add this to your .vimrc:
+
+    map <S-F4> :cprev<RETURN>
+    imap <S-F4> <ESC>:cprev<RETURN>i
+    map <F4> :cnext<RETURN>
+    imap <F4> <ESC>:cnext<RETURN>i
+
+With those you can use F4 to go to the next error and Shift+F4 to go to the
+previous error.
+
 # Author
 
 Aurélien Gâteau <agateau@kde.org>
