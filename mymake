@@ -20,6 +20,6 @@ else
     body="Build failed in $PWD"
 fi
 
-which notify-send 2>&1 > /dev/null && notify-send --expire-time=2000 -- "$title" "$body"
+which notify-send > /dev/null 2>&1 && notify-send --expire-time=2000 -- "$title" "$body"
 
 exit $result
