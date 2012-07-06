@@ -1,0 +1,21 @@
+# What is it
+
+A wrapper for make which logs to /tmp/mymake.err and a Vim macro to load the
+log output as if compilation was started from Vim, making it possible to use
+Vim functions to jump through errors.
+
+# Installation
+
+1. Copy mymake in your PATH.
+
+2. Install the Vim plugin:
+
+    mkdir -p ~/.vim/plugin
+    cp mymake.vim ~/.vim/plugin
+
+mymake uses make by default but you can overload it with the MAKEPRG
+environment variable.
+
+# Author
+
+Aurélien Gâteau <agateau@kde.org>
