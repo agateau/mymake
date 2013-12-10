@@ -15,11 +15,13 @@ result=$PIPESTATUS
 if [ $result -eq 0 ] ; then
     title="Build OK"
     body="Build completed in $PWD"
+    icon="dialog-ok-apply" #green tick
 else
     title="Build failed"
     body="Build failed in $PWD"
+    icon="dialog-error" #red square with white X
 fi
 
-which notify-send > /dev/null 2>&1 && notify-send --expire-time=2000 -- "$title" "$body"
+which notify-send > /dev/null 2>&1 && notify-send --expire-time=2000 -i "$icon" -- "$title" "$body"
 
 exit $result
