@@ -11,6 +11,7 @@ Vim functions to jump through errors.
 2. Install the Vim plugin:
 
     mkdir -p ~/.vim/plugin
+
     cp mymake.vim ~/.vim/plugin
 
 mymake uses make by default but you can overload it with the MAKEPRG
