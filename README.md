@@ -4,6 +4,9 @@ A wrapper for make which logs to /tmp/mymake.err and a Vim macro to load the
 log output as if compilation was started from Vim, making it possible to use
 Vim functions to jump through errors.
 
+It can also make use of `notify-send` if it is installed to notify you at the
+end of the build.
+
 # Installation
 
 1. Copy mymake in your PATH.
