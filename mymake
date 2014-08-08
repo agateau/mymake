@@ -12,10 +12,12 @@ fi
 
 LOG_FILE=/tmp/mymake.err
 
+build_dir=$(echo $PWD | sed "s,^$HOME,~,")
+
 $MAKEPRG "$@" 2>&1 | tee $LOG_FILE
 result=$PIPESTATUS
 if [ $result -eq 0 ] ; then
-    body="Build completed in $PWD"
+    body="Build completed in $build_dir"
     warn_count=$(grep warning: $LOG_FILE | wc -l)
     if [ "$warn_count" = "0" ] ; then
         title="Build OK"
@@ -30,7 +32,7 @@ if [ $result -eq 0 ] ; then
     fi
 else
     title="Build failed"
-    body="Build failed in $PWD"
+    body="Build failed in $build_dir"
     icon="dialog-error" #red square with white X
 fi
 
