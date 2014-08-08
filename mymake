@@ -10,12 +10,24 @@ if [ -z "$MAKEPRG" ] ; then
     MAKEPRG=make
 fi
 
-$MAKEPRG "$@" 2>&1 | tee /tmp/mymake.err
+LOG_FILE=/tmp/mymake.err
+
+$MAKEPRG "$@" 2>&1 | tee $LOG_FILE
 result=$PIPESTATUS
 if [ $result -eq 0 ] ; then
-    title="Build OK"
     body="Build completed in $PWD"
-    icon="dialog-ok-apply" #green tick
+    warn_count=$(grep warning: $LOG_FILE | wc -l)
+    if [ "$warn_count" = "0" ] ; then
+        title="Build OK"
+        icon="dialog-ok-apply" #green tick
+    else
+        if [ "$warn_count" = "1" ] ; then
+            title="Build OK: 1 warning"
+        else
+            title="Build OK: $warn_count warnings"
+        fi
+        icon="dialog-warning"
+    fi
 else
     title="Build failed"
     body="Build failed in $PWD"
