@@ -5,6 +5,7 @@
 # Thin wrapper for make which:
 # - logs output to /tmp/mymake.err, to be used with mymake.vim
 # - shows notifications when done
+# - automatically set -j if possible
 
 set -euo pipefail
 IFS=$'\n\t'
@@ -15,7 +16,12 @@ LOG_FILE=/tmp/mymake.err
 
 build_dir=$(echo $PWD | sed "s,^$HOME,~,")
 
-$MAKEPRG "$@" 2>&1 | tee $LOG_FILE
+extra_args=""
+if which nproc > /dev/null 2>&1 ; then
+    extra_args=-j$(nproc)
+fi
+
+$MAKEPRG $extra_args "$@" 2>&1 | tee $LOG_FILE
 result=$PIPESTATUS
 if [ $result -eq 0 ] ; then
     body="Build completed in $build_dir"
