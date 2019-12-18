@@ -1,14 +1,15 @@
 #!/bin/bash
-
 # (c) 2012 Aurélien Gâteau <agateau@kde.org>
 # MIT License
 #
 # Thin wrapper for make which:
 # - logs output to /tmp/mymake.err, to be used with mymake.vim
 # - shows notifications when done
-if [ -z "$MAKEPRG" ] ; then
-    MAKEPRG=make
-fi
+
+set -euo pipefail
+IFS=$'\n\t'
+
+MAKEPRG=${MAKEPRG:-make}
 
 LOG_FILE=/tmp/mymake.err
 
@@ -18,7 +19,7 @@ $MAKEPRG "$@" 2>&1 | tee $LOG_FILE
 result=$PIPESTATUS
 if [ $result -eq 0 ] ; then
     body="Build completed in $build_dir"
-    warn_count=$(grep warning: $LOG_FILE | wc -l)
+    warn_count=$(grep --count warning: $LOG_FILE || true)
     if [ "$warn_count" = "0" ] ; then
         title="Build OK"
         icon="dialog-ok-apply" #green tick
