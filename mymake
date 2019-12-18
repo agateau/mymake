@@ -14,6 +14,19 @@ MAKEPRG=${MAKEPRG:-make}
 
 LOG_FILE=/tmp/mymake.err
 
+notify_result() {
+    local icon=$1
+    local title=$2
+    local body=$3
+    if ! which notify-send > /dev/null 2>&1 ; then
+        return
+    fi
+    if [ -z "$DISPLAY" ]; then
+        return
+    fi
+    notify-send --expire-time=2000 -i "$icon" -- "$title" "$body"
+}
+
 build_dir=$(echo $PWD | sed "s,^$HOME,~,")
 
 extra_args=""
@@ -43,6 +56,6 @@ else
     icon="dialog-error" #red square with white X
 fi
 
-which notify-send > /dev/null 2>&1 && notify-send --expire-time=2000 -i "$icon" -- "$title" "$body"
+notify_result "$icon" "$title" "$body"
 
 exit $result
