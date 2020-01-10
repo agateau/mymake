@@ -9,13 +9,10 @@ end of the build.
 
 # Installation
 
-1. Copy mymake in your PATH.
+Run `make install`
 
-2. Install the Vim plugin:
-
-    mkdir -p ~/.vim/plugin
-
-    cp mymake.vim ~/.vim/plugin
+This will install the `mymake` command to ~/.local/bin and the Vim plugin to
+~/.vim/after/plugin.
 
 mymake uses make by default but you can overload it with the MAKEPRG
 environment variable.
